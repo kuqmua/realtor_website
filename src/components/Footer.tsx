@@ -3,7 +3,6 @@ export function Footer() {
   return (
     <footer className="footer container">
       <div className="footer-identity">
-        <p className="footer-name">Недвижимость с личным участием</p>
         <p className="footer-meta">
           <span>© {new Date().getFullYear()}</span>
           <span>

@@ -20,8 +20,7 @@ export function Contacts() {
             <em>Свяжитесь со мной</em>
           </h2>
           <p className="contacts-lead">
-            Позвоните или напишите в удобном мессенджере. Обсудим покупку,
-            продажу, ипотеку или страхование.
+            Позвоните или напишите в удобном мессенджере. Обсудим ваш вопрос.
           </p>
           <div className="consultation-note">
             <span className="consultation-icon">
@@ -29,7 +28,7 @@ export function Contacts() {
             </span>
             <div>
               <strong>Первичная консультация бесплатна</strong>
-              <p>Разберём вашу ситуацию и обсудим дальнейшие шаги.</p>
+              <p>Разберём вашу ситуацию и определим дальнейшие шаги.</p>
             </div>
           </div>
           <div className="contact-work-terms">
@@ -50,9 +49,6 @@ export function Contacts() {
         </div>
         <div className="contact-panel">
           <div className="contact-person">
-            <span className="contact-monogram" aria-hidden="true">
-              {site.initials}
-            </span>
             <div>
               <p className="contact-role">{site.profession}</p>
               <h3>{site.name}</h3>
@@ -92,7 +88,6 @@ export function Contacts() {
                 <small>Электронная почта</small>
                 {site.email}
               </span>
-              <span aria-hidden="true">↗</span>
             </a>
           )}
         </div>
