@@ -1,0 +1,8 @@
+dist
+node_modules
+package-lock.json
+DEVELOPMENT_PLAN.md
+descr.txt
+playwright-report
+test-results
+*lighthouse.*/

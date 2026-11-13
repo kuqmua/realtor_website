@@ -1,0 +1,15 @@
+.git
+node_modules
+dist
+.env
+.env.*
+!.env.example
+playwright-report
+test-results
+*.zip
+*.tar
+*.log
+.vscode
+.idea
+public/og-image.jpg
+*lighthouse.*

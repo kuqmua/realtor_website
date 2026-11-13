@@ -1,0 +1,69 @@
+{
+	admin off
+	servers {
+		protocols h1 h2
+	}
+	http_port 8080
+	https_port 8443
+	auto_https disable_redirects
+}
+
+(secure_headers) {
+	import /srv/site/security.caddy
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		X-Frame-Options DENY
+		-Server
+	}
+}
+
+(site) {
+	root * /srv/site
+	encode zstd gzip
+	import secure_headers
+	@forbidden path /.git/* /.env* /src/* /node_modules/* /package*.json /Dockerfile /compose.yaml /infra/* /security.caddy
+	@hidden path_regexp hidden (^|/)\.[^/]+
+	respond @hidden 404
+	respond @forbidden 404
+	@methods not method GET HEAD
+	respond @methods 405
+	@notAssets not path /assets/*
+	header @notAssets Cache-Control "no-cache"
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+	file_server
+	handle_errors {
+		header Cache-Control "no-cache"
+		import secure_headers
+		rewrite * /404.html
+		file_server
+	}
+}
+
+http://{$DOMAIN}:8080 {
+	redir https://{$DOMAIN}{uri} 308
+}
+https://{$DOMAIN}:8443 {
+	import site
+}
+# Container-local probe, not published to the host.
+http://:8081 {
+	root * /srv/site
+	@health path /health.txt
+	handle @health {
+		file_server
+	}
+	respond 404
+}
+
+# ALIAS_DOMAIN must resolve to the same host for its HTTPS certificate.
+http://{$ALIAS_DOMAIN:www.localhost}:8080 {
+	redir https://{$DOMAIN}{uri} 308
+}
+https://{$ALIAS_DOMAIN:www.localhost}:8443 {
+	import secure_headers
+	redir https://{$DOMAIN}{uri} 308
+}

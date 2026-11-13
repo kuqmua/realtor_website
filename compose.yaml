@@ -1,0 +1,30 @@
+services:
+  web:
+    image: ${SITE_IMAGE:?Set immutable image tag or digest in .env}
+    environment:
+      ALIAS_DOMAIN: ${ALIAS_DOMAIN:?Set alternative hostname in .env}
+      DOMAIN: ${DOMAIN:?Set canonical domain in .env}
+    ports:
+      - "80:8080/tcp"
+      - "443:8443/tcp"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    mem_limit: 128m
+    cpus: 1.0
+    pids_limit: 100
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: "3"
+volumes:
+  caddy_data:
+  caddy_config:
