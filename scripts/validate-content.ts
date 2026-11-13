@@ -174,9 +174,13 @@ try {
   )) as { portrait: PropertyImage | null };
   const release = process.argv.includes("--release") || site.approved;
   validateSite(site, release, portrait);
+  const { illustrations } = (await server.ssrLoadModule(
+    "/src/data/visuals.ts",
+  )) as { illustrations: Record<string, PropertyImage> };
   for (const image of [
     ...properties.flatMap((p) => p.images),
     ...(portrait ? [portrait] : []),
+    ...Object.values(illustrations),
   ])
     await validateImageMetadata(image);
   if (release && properties.some((p) => p.published && p.demo))

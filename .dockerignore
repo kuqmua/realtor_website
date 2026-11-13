@@ -13,3 +13,4 @@ test-results
 .idea
 public/og-image.jpg
 *lighthouse.*
+build-assets/visuals/

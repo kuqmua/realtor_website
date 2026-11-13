@@ -44,9 +44,6 @@ const layers = await Promise.all([
   text(site.name, 44, "#faf9f5", 90, 238),
   text("Покупка и продажа недвижимости", 32, "#faf9f5", 90, 390),
   text("Ипотека · Сопровождение сделки", 27, "#c1d1b4", 90, 452),
-  ...(!site.approved
-    ? [text("Демонстрационная версия", 18, "#e6d7b9", 90, 530)]
-    : []),
 ]);
 await writeFile(
   "public/og-image.jpg",

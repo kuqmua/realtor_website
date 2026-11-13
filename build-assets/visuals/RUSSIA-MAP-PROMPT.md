@@ -1,0 +1,7 @@
+# Объёмная карта России
+
+Создана встроенным Imagegen. Референс — растровое представление исходного географического контура `public/russia-map.svg`; исходный PNG сохраняется как `build-assets/visuals/russia-maquette.png`, адаптивные файлы — в `src/assets/editorial/russia-maquette/`.
+
+## Итоговый промпт
+
+Use case: style-transfer. Asset type: refined geographic illustration for a private Russian realtor website. Reference image: the provided flat map supplies the Russia silhouette and the two western city point positions. Transform this flat graphic into a beautifully crafted three-dimensional architectural maquette of Russia, viewed from a slightly elevated near-overhead angle, with the entire outline visible. Preserve the recognizable outline and western/eastern geography. The raised land form is warm ivory matte limestone with delicately sculpted natural relief, thin sage-green sides and soft realistic contact shadows on a seamless very pale sage surface (#f1f5e9). Add exactly two understated tiny dark sage metal location pins in the western part corresponding to the two reference dots. Refined editorial product photography, soft sunlight from upper left, tactile materials, quiet elegant premium real estate aesthetic. Landscape 3:2 composition, map centered with ample negative space and margins. No text, no labels, no flags, no borders between regions, no roads, no globe, no gold, no logos, no watermarks. Make this a completely new physical-looking image, not the previous flat vector or a blurry silhouette.
