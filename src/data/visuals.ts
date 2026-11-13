@@ -1,3 +1,4 @@
+import heroSkyline from "../assets/editorial/hero-skyline/image";
 import contactsDoorway from "../assets/editorial/contacts-doorway/image";
 import termsAgreement from "../assets/editorial/terms-agreement/image";
 import coverageCity from "../assets/editorial/coverage-city/image";
@@ -10,6 +11,7 @@ import protection from "../assets/editorial/protection/image";
 import type { PropertyImage } from "../types/content";
 
 export const illustrations = {
+  heroSkyline,
   architecture,
   mortgage,
   protection,
@@ -23,5 +25,5 @@ export const illustrations = {
 export const serviceVisuals: Record<string, PropertyImage> = {
   purchase: architecture,
   mortgage,
-  support: protection,
+  insurance: protection,
 };

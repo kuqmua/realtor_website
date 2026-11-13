@@ -14,23 +14,21 @@ test("all information stays on one page during section navigation", async ({
   const pageAddress = new URL(page.url());
   for (const section of [
     ".hero",
-    "#about",
-    "#clients",
-    "#services",
-    "#coverage",
-    "#terms",
+    "#purchase",
+    "#mortgage",
+    "#insurance",
     "#contacts",
   ]) {
     await expect(page.locator(section)).toBeVisible();
   }
-  await expect(page.locator("#services")).toContainText(
+  await expect(page.locator("#mortgage")).toContainText(
     "материнского капитала",
   );
-  await expect(page.locator("#terms")).toContainText("частичная предоплата");
+  await expect(page.locator("#contacts")).toContainText("частичная предоплата");
   for (const [name, target] of [
-    ["Обо мне", "about"],
-    ["Услуги", "services"],
-    ["Условия", "terms"],
+    ["Покупка/Продажа недвижимости", "purchase"],
+    ["Одобрение ипотеки", "mortgage"],
+    ["Страхование", "insurance"],
     ["Контакты", "contacts"],
   ]) {
     const link = page
@@ -57,39 +55,56 @@ test("content, anchors and contacts", async ({ page }) => {
     ),
   ).toHaveCount(0);
   await expect(page.getByRole("navigation").getByRole("link")).toHaveCount(4);
+  await expect(
+    page.locator("#about, #services, #terms, #service-support"),
+  ).toHaveCount(0);
+  await expect(page.locator("#insurance")).toContainText(
+    "Условия и оформление",
+  );
+  await expect(page.locator("#insurance")).toContainText("Вид страхования");
+  await expect(page.locator("#clients")).toHaveCount(0);
   await expect(page.locator("body")).not.toContainText(
     /демонстрац|демо.?данн|тестов|здесь будет|ожидаем фотографию/i,
   );
-  await expect(page.locator("#about")).toContainText("Более 20 лет");
-  await expect(page.locator("#about")).toContainText("Работаю самостоятельно");
-  await expect(page.locator(".service-overview h3")).toHaveText([
-    "Покупка и продажа",
+  await expect(page.locator("#purchase")).toContainText("Более 20 лет");
+  await expect(page.locator("#purchase")).toContainText(
+    "Работаю самостоятельно",
+  );
+  await expect(page.locator(".service-overview h2")).toHaveText([
+    "Покупка/Продажа недвижимости",
     "Одобрение ипотеки",
-    "Сопровождение сделки",
+    "Страхование",
   ]);
-  await expect(page.locator("#service-purchase")).toContainText(
+  await expect(page.locator("#purchase")).toContainText(
     "Коммерческая недвижимость",
   );
-  await expect(page.locator("#service-mortgage")).toContainText(
+  await expect(page.locator("#mortgage")).toContainText(
     "Окончательное решение об одобрении ипотеки принимает банк",
   );
-  await expect(page.locator("#service-support")).toContainText(
+  await expect(page.locator("#purchase")).toContainText(
     "Дистанционные и электронные сделки",
   );
-  await expect(page.locator("#terms")).toContainText("частичная предоплата");
+  await expect(page.locator("#contacts")).toContainText("частичная предоплата");
   await page
     .getByRole("navigation")
-    .getByRole("link", { name: "Услуги" })
+    .getByRole("link", { name: "Одобрение ипотеки" })
     .click();
-  await expect(page).toHaveURL(/#services$/);
+  await expect(page).toHaveURL(/#mortgage$/);
   for (const link of await page.locator('a[href^="tel:"]').all())
     await expect(link).toHaveAttribute("href", `tel:${site.phone}`);
   await expect(page.locator('a[href^="tel:"]').first()).toBeVisible();
   await expect(page.locator(".header-phone")).toBeVisible();
-  await expect(page.locator(".header-phone")).toContainText("Позвонить");
-  if (site.email)
-    await expect(page.locator(`a[href="mailto:${site.email}"]`)).toBeVisible();
-  else await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
+  await expect(page.locator(".header-phone")).toHaveText(site.phoneDisplay);
+  if (site.email) {
+    await expect(
+      page
+        .locator(".hero-contact-card")
+        .locator(`a[href="mailto:${site.email}"]`),
+    ).toBeVisible();
+    await expect(
+      page.locator("#contacts").locator(`a[href="mailto:${site.email}"]`),
+    ).toBeVisible();
+  } else await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
   for (const m of site.messengers)
     await expect(
       page.locator("#contacts").getByRole("link", { name: new RegExp(m.name) }),
@@ -220,18 +235,33 @@ test("thematic images load with responsive sources and a decorative background",
       ),
     )
     .toBe(true);
+  const skyline = page.locator(".hero-background img");
+  await expect(page.locator(".hero-background")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
+  await expect(skyline).toHaveAttribute("alt", "");
+  await expect(skyline).toHaveAttribute("loading", "eager");
+  await expect(skyline).toHaveAttribute("srcset", /480w.*800w.*1200w/);
+  await expect
+    .poll(() =>
+      skyline.evaluate(
+        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
   await expect(page.locator(".service-scene img")).toHaveCount(3);
   // Each placement has its own photo; responsive variants may share a scene only within a picture.
   const editorialSources = await page
     .locator(
-      ".hero img, .service-scene img, .coverage-scene img, .section-background img",
+      ".hero-background img, .hero img, .service-scene img, .coverage-scene img, .section-background img",
     )
     .evaluateAll((images) =>
       images.map((image) => (image as HTMLImageElement).src),
     );
-  expect(editorialSources).toHaveLength(9);
+  expect(editorialSources).toHaveLength(6);
   expect(new Set(editorialSources).size).toBe(editorialSources.length);
-  await expect(page.locator(".section-background")).toHaveCount(4);
+  await expect(page.locator(".section-background")).toHaveCount(1);
   for (const background of await page.locator(".section-background").all()) {
     await expect(background).toHaveAttribute("aria-hidden", "true");
     await expect(background.locator("img")).toHaveAttribute("alt", "");
@@ -250,13 +280,10 @@ test("thematic images load with responsive sources and a decorative background",
       )
       .toBe(true);
   }
-  await expect(page.locator(".coverage-scene")).toHaveAttribute(
-    "aria-hidden",
-    "true",
-  );
+  await expect(page.locator("#coverage")).toHaveCount(0);
 });
 
-test("purchase and sale services are visible together without tabs", async ({
+test("purchase and sale services are visible together without numbering", async ({
   page,
 }) => {
   await page.goto("/");
@@ -267,11 +294,86 @@ test("purchase and sale services are visible together without tabs", async ({
   await expect(
     block.getByRole("heading", { name: "Продавцам", exact: true }),
   ).toBeVisible();
-  await expect(
-    block.getByText("Подбор недвижимости под ваш запрос", { exact: true }),
-  ).toBeVisible();
-  await expect(
-    block.getByText("Поиск покупателя для вашего объекта", { exact: true }),
-  ).toBeVisible();
-  await expect(block.getByRole("tab")).toHaveCount(0);
+  await expect(block.locator(".number")).toHaveCount(0);
+});
+
+test("portrait stands flush with the bottom edge of the hero", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  for (const width of [320, 390, 768, 1440, 1920]) {
+    await page.setViewportSize({ width, height: 1100 });
+    const edges = await page.evaluate(() => ({
+      section: document.querySelector(".hero-section")!.getBoundingClientRect()
+        .bottom,
+      portrait: document.querySelector(".portrait")!.getBoundingClientRect()
+        .bottom,
+      portraitLeft: document.querySelector(".portrait")!.getBoundingClientRect()
+        .left,
+      copyLeft: document.querySelector(".hero-copy")!.getBoundingClientRect()
+        .left,
+    }));
+    if (width >= 701) {
+      expect(edges.portraitLeft).toBeLessThan(edges.copyLeft);
+      expect(
+        Math.abs(edges.section - edges.portrait),
+        `portrait lower edge at ${width}`,
+      ).toBeLessThan(1);
+    }
+  }
+});
+
+test("first service stays below the initial viewport", async ({ page }) => {
+  for (const [width, height] of [
+    [390, 844],
+    [768, 1024],
+    [1366, 768],
+    [1440, 900],
+    [1920, 1080],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    const position = await page
+      .locator("#purchase")
+      .evaluate((element) => element.getBoundingClientRect().top);
+    expect(
+      position,
+      `next section at ${width}x${height}`,
+    ).toBeGreaterThanOrEqual(height - 1);
+  }
+});
+
+test("mobile opening view shows the realtor, identity and call action", async ({
+  page,
+}) => {
+  for (const [width, height] of [
+    [320, 568],
+    [360, 640],
+    [390, 844],
+    [430, 932],
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    await expect(page.locator(".hero .portrait")).toHaveCount(1);
+    for (const selector of [
+      ".hero .portrait",
+      ".hero .intro-name",
+      ".hero .call-action",
+    ]) {
+      const bounds = await page.locator(selector).boundingBox();
+      expect(bounds).not.toBeNull();
+      expect(bounds!.y, `${selector} top at ${width}`).toBeGreaterThanOrEqual(
+        0,
+      );
+      expect(
+        bounds!.y + bounds!.height,
+        `${selector} bottom at ${width}`,
+      ).toBeLessThanOrEqual(height);
+    }
+    await expect(page.locator(".hero .messenger-link")).toHaveCount(3);
+    await expect(page.locator(".hero .contact-email")).toBeVisible();
+  }
 });

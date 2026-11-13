@@ -13,14 +13,15 @@ export function Contacts() {
       <SectionBackground image={illustrations.contactsDoorway} />
       <div className="container contacts-grid">
         <div className="contacts-intro">
-          <p className="eyebrow">Давайте обсудим ваш вопрос</p>
+          <p className="eyebrow">Контакты</p>
           <h2 id="contacts-title">
-            Большие решения
+            Остались вопросы?
             <br />
-            начинаются <em>с разговора</em>
+            <em>Свяжитесь со мной</em>
           </h2>
           <p className="contacts-lead">
-            Расскажите, какую недвижимость хотите купить или продать.
+            Позвоните или напишите в удобном мессенджере. Обсудим покупку,
+            продажу, ипотеку или страхование.
           </p>
           <div className="consultation-note">
             <span className="consultation-icon">
@@ -28,8 +29,16 @@ export function Contacts() {
             </span>
             <div>
               <strong>Первичная консультация бесплатна</strong>
-              <p>Обсудим ваш вопрос и возможные следующие шаги.</p>
+              <p>Разберём вашу ситуацию и обсудим дальнейшие шаги.</p>
             </div>
+          </div>
+          <div className="contact-work-terms">
+            <h3>Условия работы</h3>
+            <p>
+              Стоимость услуг рассчитывается индивидуально. Для дистанционных
+              услуг возможна частичная предоплата — её размер и условия
+              согласовываются с вами индивидуально.
+            </p>
           </div>
           <div className="contact-geography">
             <ServiceIcon name="globe" />

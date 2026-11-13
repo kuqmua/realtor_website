@@ -1,5 +1,3 @@
-import { About, Audience, Coverage } from "./components/About";
-import { Terms } from "./components/Terms";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { Services } from "./components/Services";
@@ -14,11 +12,7 @@ export default function App() {
       <Header />
       <main id="main">
         <Hero />
-        <About />
-        <Audience />
         <Services />
-        <Coverage />
-        <Terms />
         <Contacts />
       </main>
       <Footer />

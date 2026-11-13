@@ -15,10 +15,7 @@ export function Header() {
     >
       <a className="brand" href="#top">
         <span className="brand-copy">
-          <span className="brand-name">{site.shortName}</span>
-          <small>
-            {site.profession} · {site.locality}
-          </small>
+          <span className="brand-name">{site.profession}</span>
         </span>
       </a>
       <button
@@ -43,9 +40,9 @@ export function Header() {
         aria-label="Основная навигация"
       >
         {[
-          ["about", "Обо мне"],
-          ["services", "Услуги"],
-          ["terms", "Условия"],
+          ["purchase", "Покупка/Продажа недвижимости"],
+          ["mortgage", "Одобрение ипотеки"],
+          ["insurance", "Страхование"],
           ["contacts", "Контакты"],
         ].map(([id, label]) => (
           <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>
@@ -73,7 +70,6 @@ export function Header() {
             />
           </svg>
           <span className="header-call-copy">
-            <span>Позвонить лично</span>
             <strong>{site.phoneDisplay}</strong>
           </span>
         </a>

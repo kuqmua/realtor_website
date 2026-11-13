@@ -3,9 +3,11 @@ import { MessengerIcon } from "./MessengerIcon";
 export function ContactLinks({
   objectTitle,
   showPhone = false,
+  showMessengerLabel = true,
 }: {
   objectTitle?: string;
   showPhone?: boolean;
+  showMessengerLabel?: boolean;
 }) {
   return (
     <div className="contact-links">
@@ -14,7 +16,6 @@ export function ContactLinks({
           <a className="button" href={`tel:${site.phone}`}>
             {showPhone ? (
               <span className="call-copy">
-                <span className="call-label">Позвонить лично</span>
                 <span className="call-number">{site.phoneDisplay}</span>
               </span>
             ) : objectTitle ? (
@@ -41,7 +42,9 @@ export function ContactLinks({
       )}
       {site.messengers.length > 0 && (
         <div className="messenger-group">
-          <p className="messenger-label">Написать в мессенджере</p>
+          {showMessengerLabel && (
+            <p className="messenger-label">Написать в мессенджере</p>
+          )}
           <div className="messenger-links">
             {site.messengers.map((m) => (
               <a

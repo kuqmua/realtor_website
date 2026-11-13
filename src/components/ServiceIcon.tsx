@@ -1,4 +1,25 @@
 const paths = {
+  apartment: (
+    <>
+      <path d="M4 21V4h16v17M2 21h20M8 21v-5h8v5M8 8h1m6 0h1M8 12h1m6 0h1" />
+    </>
+  ),
+  building: (
+    <>
+      <path d="M5 21V3h14v18M3 21h18M9 21v-4h6v4M8 7h2m4 0h2M8 11h2m4 0h2" />
+    </>
+  ),
+  plot: (
+    <>
+      <path d="m3 14 9-5 9 5-9 5ZM3 18l9 5 9-5M12 9V2m0 0 6 2-6 2" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3" y="7" width="18" height="14" rx="2" />
+      <path d="M8 7V3h8v4M3 12l9 4 9-4M12 13v5" />
+    </>
+  ),
   home: (
     <>
       <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z" />

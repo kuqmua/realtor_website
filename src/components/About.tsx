@@ -4,7 +4,6 @@ import { SectionBackground } from "./SectionBackground";
 import { illustrations } from "../data/visuals";
 import { ResponsiveImage } from "./ResponsiveImage";
 import { about } from "../data/about";
-import { site } from "../data/site";
 export function About() {
   return (
     <section
@@ -20,7 +19,6 @@ export function About() {
           <br />
           <em>Личное участие.</em>
         </h2>
-        <p className="about-name">{site.name}</p>
         <p className="block-intro">{about.intro}</p>
         <div className="fact-stack">
           {about.facts.map((fact, i) => (
@@ -59,32 +57,27 @@ const clientDetails: { icon: ServiceIconName; text: string }[] = [
 ];
 export function Audience() {
   return (
-    <section
+    <div
       id="clients"
-      className="section audience-section illustrated-section"
+      className="contact-audience"
       aria-labelledby="clients-title"
     >
-      <SectionBackground image={illustrations.audienceInterior} />
-      <div className="container">
-        <p className="eyebrow">Для кого</p>
-        <h2 id="clients-title">
-          С кем <em>работаю</em>
-        </h2>
-        <ul className="client-list">
-          {about.clients.map((client, i) => (
-            <li key={client}>
-              <span className="client-icon">
-                <ServiceIcon name={clientDetails[i].icon} />
-              </span>
-              <div className="client-copy">
-                <h3>{client}</h3>
-                <p>{clientDetails[i].text}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+      <p className="eyebrow">Для кого</p>
+      <h3 id="clients-title">С кем работаю</h3>
+      <ul className="client-list">
+        {about.clients.map((client, i) => (
+          <li key={client}>
+            <span className="client-icon">
+              <ServiceIcon name={clientDetails[i].icon} />
+            </span>
+            <div className="client-copy">
+              <h4>{client}</h4>
+              <p>{clientDetails[i].text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 export function Coverage() {
