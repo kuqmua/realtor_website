@@ -134,3 +134,35 @@ test("checks all responsive source files and real dimensions", async () => {
     /srcSet/,
   );
 });
+
+test("empty and withdrawn listings do not leave an empty grid or a stale offer", async () => {
+  const { createServer } = await import("vite");
+  const { createElement } = await import("react");
+  const { renderToStaticMarkup } = await import("react-dom/server");
+  const server = await createServer({
+    server: { middlewareMode: true, ws: false, hmr: false },
+  });
+  try {
+    const { Properties } = await server.ssrLoadModule(
+      "/src/components/Properties.tsx",
+    );
+    for (const items of [[], [{ ...valid, published: false }]]) {
+      const html = renderToStaticMarkup(createElement(Properties, { items }));
+      assert.match(html, /Сейчас опубликованных объектов нет/);
+      assert.doesNotMatch(
+        html,
+        /class="property-grid"|<article|object-test-flat/,
+      );
+    }
+    const html = renderToStaticMarkup(
+      createElement(Properties, {
+        items: [valid, { ...valid, id: "withdrawn", published: false }],
+      }),
+    );
+    assert.match(html, /object-test-flat/);
+    assert.doesNotMatch(html, /object-withdrawn/);
+    assert.equal((html.match(/<article /g) || []).length, 1);
+  } finally {
+    await server.close();
+  }
+});

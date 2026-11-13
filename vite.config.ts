@@ -17,6 +17,11 @@ export default defineConfig({
             .replaceAll(">", "&gt;");
         const origin = site.origin;
         return html
+          .replace("<!--NAME-->", escape(site.name))
+          .replace(
+            "<!--ROLE-->",
+            escape(`${site.profession}, ${site.locality}.`),
+          )
           .replace(
             "<!--META-->",
             `<title>${escape(site.title)}</title><meta name="description" content="${escape(site.description)}"><meta name="robots" content="${site.approved ? "index, follow" : "noindex, nofollow"}"><meta property="og:title" content="${escape(site.title)}"><meta property="og:description" content="${escape(site.description)}"><meta property="og:type" content="website"><meta property="og:locale" content="ru_RU"><script type="application/ld+json">${structuredData}</script>${origin ? `<link rel="canonical" href="${escape(origin)}/"><meta property="og:url" content="${escape(origin)}/"><meta property="og:image" content="${escape(origin)}/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${escape(site.name)} — частный риелтор">` : ""}`,

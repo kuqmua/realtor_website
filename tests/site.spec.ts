@@ -1,12 +1,43 @@
 import { test, expect } from "@playwright/test";
+import { createServer } from "vite";
+import type { Property } from "../src/types/content";
 import AxeBuilder from "@axe-core/playwright";
 import { site } from "../src/data/site";
+let published: Property[] = [];
+test.beforeAll(async () => {
+  const server = await createServer({
+    server: { middlewareMode: true, ws: false, hmr: false },
+  });
+  try {
+    const content = (await server.ssrLoadModule("/src/data/properties.ts")) as {
+      properties: Property[];
+    };
+    published = content.properties.filter((p) => p.published);
+  } finally {
+    await server.close();
+  }
+});
 test("content, anchors and contacts", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
-  await expect(page.locator(".property-card")).toHaveCount(10);
+  await expect(page.locator(".property-card")).toHaveCount(published.length);
+  for (const property of published) {
+    const card = page.locator(`#object-${property.id}`);
+    await expect(card.getByRole("heading")).toHaveText(property.title);
+    await expect(card.locator(".price")).toHaveText(
+      new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: "RUB",
+        maximumFractionDigits: 0,
+      }).format(property.priceRub),
+    );
+  }
+  if (!published.length)
+    await expect(
+      page.getByText("Сейчас опубликованных объектов нет.", { exact: false }),
+    ).toBeVisible();
   await page
     .getByRole("navigation")
     .getByRole("link", { name: "Услуги" })
@@ -15,14 +46,27 @@ test("content, anchors and contacts", async ({ page }) => {
   for (const link of await page.locator('a[href^="tel:"]').all())
     await expect(link).toHaveAttribute("href", `tel:${site.phone}`);
   await expect(page.locator('a[href^="tel:"]').first()).toBeVisible();
-  await expect(page.locator(`a[href="mailto:${site.email}"]`)).toBeVisible();
+  await expect(page.locator(".header-phone")).toBeVisible();
+  await expect(page.locator(".header-phone")).toContainText("Позвонить");
+  if (site.email)
+    await expect(page.locator(`a[href="mailto:${site.email}"]`)).toBeVisible();
+  else await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
   for (const m of site.messengers)
     await expect(
       page.locator("#contacts").getByRole("link", { name: new RegExp(m.name) }),
     ).toHaveAttribute("href", m.url);
-  await page.locator("summary").first().click();
-  await expect(page.locator("details").first()).toHaveAttribute("open", "");
+  if (published.length) {
+    await page.locator("summary").first().click();
+    await expect(page.locator("details").first()).toHaveAttribute("open", "");
+  }
   expect(errors).toEqual([]);
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
 });
 test("mobile menu, keyboard and accessibility", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -43,8 +87,10 @@ test("mobile menu, keyboard and accessibility", async ({ page }) => {
     .getByRole("link", { name: "Объекты" })
     .click();
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await page.locator("summary").first().focus();
-  await page.keyboard.press("Enter");
+  if (published.length) {
+    await page.locator("summary").first().focus();
+    await page.keyboard.press("Enter");
+  }
   expect(
     (
       await new AxeBuilder({ page })
@@ -78,11 +124,20 @@ test("no JavaScript fallback and static metadata", async ({
   await expect(
     page.getByRole("link", { name: site.phoneDisplay }),
   ).toHaveAttribute("href", `tel:${site.phone}`);
+  await expect(page).toHaveTitle(site.title);
   await context.close();
   const response = await request.get("/");
   const html = await response.text();
-  expect(html).toContain(site.title);
-  expect(html).toContain("noindex, nofollow");
+  expect(html).toContain(site.approved ? "index, follow" : "noindex, nofollow");
+  const robots = await request.get("/robots.txt");
+  expect(await robots.text()).toContain(
+    site.approved ? "Allow: /" : "Disallow: /",
+  );
+  if (site.approved) {
+    const sitemap = await request.get("/sitemap.xml");
+    expect(sitemap.status()).toBe(200);
+    expect(await sitemap.text()).toContain(`<loc>${site.origin}/</loc>`);
+  }
   expect(html).toContain(`href="${site.origin}/"`);
 });
 

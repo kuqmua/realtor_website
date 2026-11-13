@@ -34,7 +34,13 @@ async function text(
 }
 const background = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#23483e"/><rect x="48" y="48" width="1104" height="534" rx="8" fill="none" stroke="#8ca397"/><path d="M90 340H1110" stroke="#8ca397"/></svg>`;
 const layers = await Promise.all([
-  text("ЧАСТНЫЙ РИЕЛТОР · ЧЕБОКСАРЫ", 22, "#c1d1b4", 90, 138),
+  text(
+    `${site.profession.toLocaleUpperCase("ru-RU")} · ${site.locality.toLocaleUpperCase("ru-RU")}`,
+    22,
+    "#c1d1b4",
+    90,
+    138,
+  ),
   text(site.name, 44, "#faf9f5", 90, 238),
   text("Покупка и продажа недвижимости", 32, "#faf9f5", 90, 390),
   text("Ипотека · Сопровождение сделки", 27, "#c1d1b4", 90, 452),

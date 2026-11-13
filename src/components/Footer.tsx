@@ -5,7 +5,9 @@ export function Footer() {
       <p>
         © {new Date().getFullYear()} {site.name}
         <br />
-        <small>Частный риелтор · Чебоксары</small>
+        <small>
+          {site.profession} · {site.locality}
+        </small>
       </p>
       <a href="#top">В начало ↑</a>
     </footer>

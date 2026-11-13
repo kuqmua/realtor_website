@@ -102,6 +102,18 @@ export function validateSite(
   release = false,
   portrait: PropertyImage | null = null,
 ) {
+  for (const field of [
+    "name",
+    "shortName",
+    "initials",
+    "profession",
+    "locality",
+    "title",
+    "description",
+    "hours",
+    "geography",
+  ] as const)
+    if (!data[field].trim()) throw Error(`Пустое обязательное поле: ${field}`);
   for (const m of data.messengers) {
     const u = new URL(m.url);
     const hosts: Record<string, string[]> = {
@@ -149,7 +161,9 @@ export function validateSite(
       throw Error("Нужен production origin");
   }
 }
-const server = await createServer({ server: { middlewareMode: true } });
+const server = await createServer({
+  server: { middlewareMode: true, ws: false, hmr: false },
+});
 try {
   const { properties } = (await server.ssrLoadModule(
     "/src/data/properties.ts",

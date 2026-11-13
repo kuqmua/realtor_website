@@ -4,7 +4,7 @@ export const structuredData = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Person",
   name: site.name,
-  jobTitle: "Частный риелтор",
+  jobTitle: site.profession,
   description: site.description,
   ...(site.approved ? { url: `${site.origin}/`, telephone: site.phone } : {}),
 }).replaceAll("<", "\\u003c");

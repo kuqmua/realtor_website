@@ -44,7 +44,7 @@ export function Hero() {
         ) : (
           <div className="portrait-placeholder">
             <span className="portrait-initials" aria-hidden="true">
-              ЕЛ
+              {site.initials}
             </span>
             <p>
               Здесь будет портрет
@@ -56,7 +56,7 @@ export function Hero() {
         )}
         <div className="portrait-caption">
           <span>Ваш частный риелтор</span>
-          <strong>Елена Левошина</strong>
+          <strong>{site.shortName}</strong>
         </div>
       </div>
     </section>

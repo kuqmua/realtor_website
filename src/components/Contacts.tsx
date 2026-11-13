@@ -22,7 +22,7 @@ export function Contacts() {
         </div>
         <div className="contact-panel">
           <h3>{site.name}</h3>
-          <p>Частный риелтор</p>
+          <p>{site.profession}</p>
           {site.phone && (
             <a className="large-phone" href={`tel:${site.phone}`}>
               {site.phoneDisplay}

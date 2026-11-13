@@ -6,10 +6,13 @@ export function Header() {
     <header className="header container">
       <a className="brand" href="#top">
         <span className="monogram" aria-hidden="true">
-          ЕЛ
+          {site.initials}
         </span>
         <span>
-          Елена Левошина<small>Частный риелтор · Чебоксары</small>
+          {site.shortName}
+          <small>
+            {site.profession} · {site.locality}
+          </small>
         </span>
       </a>
       <button
@@ -36,8 +39,9 @@ export function Header() {
         ))}
       </nav>
       {site.phone && (
-        <a className="header-phone" href={`tel:${site.phone}`}>
-          {site.phoneDisplay}
+        <a className="header-phone button" href={`tel:${site.phone}`}>
+          <span>Позвонить</span>
+          <span>{site.phoneDisplay}</span>
         </a>
       )}
     </header>

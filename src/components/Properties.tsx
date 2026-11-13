@@ -1,7 +1,10 @@
+import type { Property } from "../types/content";
 import { properties } from "../data/properties";
 import { PropertyCard } from "./PropertyCard";
-export function Properties() {
-  const published = properties.filter((p) => p.published);
+export function Properties({
+  items = properties,
+}: { items?: Property[] } = {}) {
+  const published = items.filter((p) => p.published);
   return (
     <section
       id="properties"
