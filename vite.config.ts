@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { site } from "./src/data/site.ts";
 export default defineConfig({
+  base: process.env.PAGES_BASE_PATH || "/",
   plugins: [
     react(),
     {
@@ -15,7 +16,7 @@ export default defineConfig({
             .replaceAll('"', "&quot;")
             .replaceAll("<", "&lt;")
             .replaceAll(">", "&gt;");
-        const origin = site.origin;
+        const origin = process.env.PAGES_SITE_URL || site.origin;
         return html
           .replace("<!--NAME-->", escape(site.name))
           .replace(
