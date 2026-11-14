@@ -120,6 +120,7 @@ export function validateSite(
       MAX: ["max.ru"],
       WhatsApp: ["wa.me"],
       Telegram: ["t.me"],
+      VK: ["vk.ru", "vk.com"],
     };
     if (
       u.protocol !== "https:" ||

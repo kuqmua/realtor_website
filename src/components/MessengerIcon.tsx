@@ -8,7 +8,12 @@ export function MessengerIcon({ name }: { name: string }) {
       aria-hidden="true"
       focusable="false"
     >
-      {name === "Telegram" ? (
+      {name === "VK" ? (
+        <path
+          d="M3 6h3c.5 4 2 7 4 8V6h3v5c2-1 3-3 4-5h3c-1 3-2 5-4 7 2 1 4 3 5 5h-4c-1-2-3-4-4-4v4h-1C6 18 3 13 3 6Z"
+          fill="currentColor"
+        />
+      ) : name === "Telegram" ? (
         <path
           d="m21 3-4 18-6-5-4 3 1-6 10-7-12 6-5-2L21 3Z"
           fill="currentColor"

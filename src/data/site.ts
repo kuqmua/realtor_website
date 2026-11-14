@@ -7,14 +7,18 @@ export const site = {
   title: "Риелтор в Чебоксарах — Елена Левошина",
   description:
     "Личная помощь с покупкой и продажей недвижимости, одобрением ипотеки, сопровождением сделки и страхованием. Чебоксары, Новочебоксарск и Чувашия.",
-  // Тестовые реквизиты. Перед публикацией замените и проверьте каждый контакт.
-  phone: "+79990000000",
-  phoneDisplay: "+7 (999) 000-00-00",
-  email: "elena@example.invalid",
+  // Контакты, предоставленные владельцем сайта.
+  phone: "+79379520337",
+  phoneDisplay: "+7 (937) 952-03-37",
+  email: "Lena3009@mail.ru",
   messengers: [
-    { name: "MAX", url: "https://max.ru/example-demo" },
-    { name: "WhatsApp", url: "https://wa.me/79990000000" },
-    { name: "Telegram", url: "https://t.me/example_demo_realtor" },
+    {
+      name: "MAX",
+      url: "https://max.ru/u/f9LHodD0cOL-DMySYk-HuCIliQ_wALW-nTKOezh31hBsnPciAoxFr_COIpI",
+    },
+    { name: "WhatsApp", url: "https://wa.me/qr/3RYAZZTYTTHHJ1" },
+    { name: "Telegram", url: "https://t.me/Elena_rieltor21" },
+    { name: "VK", url: "https://vk.ru/elena30091981" },
   ] as { name: string; url: string }[],
   origin: "https://realtor.example.invalid",
   approved: false,

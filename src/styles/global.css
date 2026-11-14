@@ -2903,3 +2903,8 @@ h4 {
     );
   }
 }
+
+.hero-contact-card .messenger-links,
+.contact-panel .messenger-links {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
