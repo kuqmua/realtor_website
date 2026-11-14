@@ -163,6 +163,7 @@ export function validateSite(
   }
 }
 const server = await createServer({
+  base: "/",
   server: { middlewareMode: true, ws: false, hmr: false },
 });
 try {
