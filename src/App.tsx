@@ -9,7 +9,9 @@ export default function App() {
       <a className="skip-link" href="#main">
         Перейти к содержимому
       </a>
-      <Header />
+      <div className="header-bar">
+        <Header />
+      </div>
       <main id="main">
         <Hero />
         <Services />

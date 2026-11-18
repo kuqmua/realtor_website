@@ -17,6 +17,7 @@
 }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-min-height);
 }
 body {
   margin: 0;
@@ -538,7 +539,7 @@ details p {
   position: fixed;
   top: 8px;
   left: 8px;
-  z-index: 10;
+  z-index: 21;
   background: #fff;
   padding: 15px;
   transform: translateY(-150%);
@@ -2522,6 +2523,12 @@ h4 {
 :root {
   --header-min-height: 58px;
 }
+.header-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #faf9f5;
+}
 .header {
   min-height: var(--header-min-height);
 }
@@ -2592,7 +2599,6 @@ h4 {
 @media (max-width: 1100px) {
   .header {
     flex-wrap: nowrap;
-    z-index: 20;
   }
   .header .brand {
     flex: 1;

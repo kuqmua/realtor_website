@@ -10,7 +10,7 @@ export const site = {
   // Контакты, предоставленные владельцем сайта.
   phone: "+79379520337",
   phoneDisplay: "+7 (937) 952-03-37",
-  email: "Lena3009@mail.ru",
+  email: "elena_realtor21@mail.ru",
   messengers: [
     {
       name: "MAX",
