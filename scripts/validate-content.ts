@@ -111,7 +111,6 @@ export function validateSite(
     "title",
     "description",
     "hours",
-    "geography",
   ] as const)
     if (!data[field].trim()) throw Error(`Пустое обязательное поле: ${field}`);
   for (const m of data.messengers) {

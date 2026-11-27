@@ -3,7 +3,7 @@ import { PurchaseOptions } from "./PurchaseOptions";
 import { ServiceIcon } from "./ServiceIcon";
 import { serviceVisuals } from "../data/visuals";
 import { ResponsiveImage } from "./ResponsiveImage";
-import { services, transactionSupport } from "../data/services";
+import { services } from "../data/services";
 export function Services() {
   return (
     <>
@@ -25,7 +25,15 @@ export function Services() {
                 </div>
                 <h2 id={`title-${service.id}`}>{service.title}</h2>
                 <p className="service-subtitle">{service.subtitle}</p>
-                <p>{service.text}</p>
+                {typeof service.text === "string" ? (
+                  <p>{service.text}</p>
+                ) : (
+                  <ul className="service-highlights" role="list">
+                    {service.text.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
               <div className="service-scene">
                 <ResponsiveImage
@@ -47,11 +55,9 @@ export function Services() {
                         </span>
                       )}
                       <div className="detail-heading">
-                        {service.id === "insurance" && (
+                        {"icon" in detail && (
                           <span className="detail-icon">
-                            <ServiceIcon
-                              name={detailIndex === 0 ? "chat" : "shield"}
-                            />
+                            <ServiceIcon name={detail.icon} />
                           </span>
                         )}
                         <h3>{detail.title}</h3>
@@ -65,43 +71,13 @@ export function Services() {
                   ))}
                 </div>
               )}
-              {service.topics.length > 0 ? (
+              {service.topics.length > 0 && (
                 <ServiceTopics
                   id={service.id}
                   label={service.topicsLabel}
                   topics={service.topics}
                   notes={service.notes}
                 />
-              ) : (
-                <div className="service-detail-note">
-                  {service.notes.map((note) => (
-                    <p key={note}>{note}</p>
-                  ))}
-                </div>
-              )}
-              {service.id === "purchase" && (
-                <>
-                  <div className="transaction-support service-content--support">
-                    <div className="service-points">
-                      {transactionSupport.map((detail) => (
-                        <div key={detail.title}>
-                          <h3>{detail.title}</h3>
-                          <ul>
-                            {detail.points.map((point) => (
-                              <li key={point}>{point}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="purchase-trust">
-                    Более 20 лет работаю с недвижимостью и ипотекой. Работаю
-                    самостоятельно — свой вопрос вы обсуждаете со мной напрямую.
-                    Личное участие, опыт, профессиональный подход и открытое
-                    общение.
-                  </p>
-                </>
               )}
             </div>
           </div>

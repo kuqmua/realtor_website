@@ -5,9 +5,7 @@ export function Footer() {
       <div className="footer-identity">
         <p className="footer-meta">
           <span>© {new Date().getFullYear()}</span>
-          <span>
-            {site.profession} · {site.locality}
-          </span>
+          <span>{site.profession} · Левошина Е.С.</span>
         </p>
       </div>
       <a className="footer-back" href="#top" aria-label="В начало ↑">

@@ -473,12 +473,6 @@ details p {
 .large-phone {
   font-size: clamp(1.3rem, 3vw, 2rem);
 }
-.contact-geography {
-  border-top: 1px solid #698073;
-  padding-top: 22px;
-  margin-top: 28px;
-  font-size: 0.9rem;
-}
 .footer {
   display: flex;
   flex-wrap: wrap;
@@ -910,35 +904,46 @@ body {
   margin-top: 10px;
 }
 .purchase-options {
-  border-top: 1px solid #c2ceb7;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 .purchase-row {
-  display: flex;
-  align-items: start;
-  gap: 26px;
-  padding: 26px 0;
-  border-bottom: 1px solid #c2ceb7;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #cdd9c4;
+  border-radius: 14px;
+  background: #f5f7ef;
 }
-.purchase-row > .number {
-  flex-shrink: 0;
-  width: 1.4em;
-  white-space: nowrap;
+.purchase-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #dfeadb;
+  color: #315747;
+}
+.purchase-icon svg {
+  width: 19px;
+  height: 19px;
 }
 .purchase-row-copy {
   min-width: 0;
 }
 .purchase-row h3 {
-  margin: 0 0 10px;
-  font-family: var(--font-body);
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.5;
+  margin: 0;
+  font: 600 1rem / 1.35 var(--font-body);
   color: #253b34;
 }
 .purchase-row ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 8px 0 0;
   font-size: 0.9rem;
   line-height: 1.8;
   color: #52664e;
@@ -946,24 +951,21 @@ body {
 .purchase-row li + li {
   margin-top: 4px;
 }
+@media (max-width: 1000px) {
+  .purchase-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .purchase-options {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+}
 @media (max-width: 700px) {
-  .purchase-row {
-    gap: 18px;
-    padding: 24px 0;
-  }
-  .purchase-row h3 {
-    font-size: 1.05rem;
-  }
   .purchase-row ul {
     font-size: 0.85rem;
   }
-}
-.service-content--support .service-points > div {
-  background: #e5eddb;
-  border: 0;
-}
-.service-content--support .detail-icon {
-  background: #fffdf8;
 }
 .service-content--mortgage .service-points {
   gap: 0;
@@ -1203,21 +1205,6 @@ body {
   .service-topics--mortgage .topic-list li {
     padding: 14px;
   }
-}
-.service-detail-note {
-  margin-top: 26px;
-  padding: 0 0 0 18px;
-  border-left: 2px solid #8ba178;
-  color: #52664e;
-  font-size: 0.83rem;
-  line-height: 1.8;
-}
-.service-detail-note p {
-  max-width: 80ch;
-  margin-bottom: 12px;
-}
-.service-detail-note p:last-child {
-  margin-bottom: 0;
 }
 .coverage-section {
   background: #e7ecdf;
@@ -1860,29 +1847,6 @@ h4 {
   margin: 8px 0 0;
   font-size: 0.85rem;
 }
-.contacts .contact-geography {
-  display: flex;
-  gap: 14px;
-  align-items: start;
-  border: 0;
-  padding: 0;
-  margin: 30px 0 0;
-}
-.contact-geography > svg {
-  color: #c1d1b4;
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-.contact-geography h3 {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin: 0 0 8px;
-}
-.contacts .contact-geography p {
-  font-size: 0.82rem;
-  line-height: 1.8;
-  margin: 0;
-}
 .contacts .contact-panel {
   border: 1px solid #d0dac9;
   border-radius: 24px;
@@ -1995,6 +1959,10 @@ h4 {
   padding-top: 22px;
   text-decoration: none;
   font-size: 0.9rem;
+}
+.hero-section .contact-email {
+  border-top: 0;
+  padding-top: 0;
 }
 .contact-email svg {
   flex-shrink: 0;
@@ -2483,11 +2451,6 @@ h4 {
 .hero-section > .hero {
   padding-top: 20px;
 }
-.hero-section .hero-headline > .eyebrow {
-  margin-bottom: 12px;
-  font-size: 0.64rem;
-  letter-spacing: 0.1em;
-}
 .hero-section h1 {
   font-size: clamp(2rem, 3.2vw, 3rem);
   line-height: 1.15;
@@ -2563,15 +2526,6 @@ h4 {
 .service-points h3 {
   margin: 0;
   font: 1.35rem/1.4 var(--font-display);
-}
-.transaction-support {
-  margin-top: 28px;
-}
-.purchase-trust {
-  margin-top: 24px;
-  max-width: 85ch;
-  color: #52664e;
-  font-size: 0.85rem;
 }
 .contact-work-terms {
   margin-top: 26px;
@@ -2653,42 +2607,41 @@ h4 {
 }
 
 .hero-headline {
-  padding: 22px 24px;
+  padding: clamp(22px, 3vw, 36px);
   margin-bottom: 16px;
-  border: 0;
-  border-radius: 22px 22px 8px 22px;
-  background: linear-gradient(125deg, #173e33, #345b48);
-  box-shadow: 0 12px 28px #183b3226;
+  border: 1px solid #567461;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at top right, #45654b, transparent 72%),
+    linear-gradient(145deg, #193e33, #122e27);
+  box-shadow: 0 14px 32px #17382e33;
   color: #fffdf3;
 }
-.hero-section .hero-headline > .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #d3e0c7;
-  font-size: 0.6rem;
-  margin-bottom: 14px;
-}
-.hero-headline > .eyebrow::before {
-  content: "";
-  display: block;
-  width: 22px;
-  height: 1px;
-  flex-shrink: 0;
-  background: #c6d5a6;
-}
 .hero-headline h1 em {
-  color: #e2e9bc;
+  color: #e5d3a1;
 }
 .hero-section .hero-headline h1 {
   margin: 0;
   font-size: clamp(1.8rem, 2.8vw, 2.65rem);
   line-height: 1.18;
 }
+.hero-headline .hero-experience {
+  max-width: 42ch;
+  margin: 18px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid #bfa879;
+  color: #e5eddd;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.hero-experience strong {
+  color: #f4e2b6;
+  font-weight: 600;
+}
 @media (max-width: 700px) {
   .hero-headline {
     padding: 18px;
-    border-radius: 18px 18px 6px 18px;
+    border-radius: 20px;
     margin-bottom: 14px;
   }
   .hero-section .hero-headline h1 {
@@ -2759,44 +2712,86 @@ h4 {
   }
 }
 
-.hero-contact-card .hero-introduction {
-  margin: -26px -26px 0;
-  padding: 24px 26px;
-  border-radius: 21px 21px 0 0;
-  border-bottom: 1px solid #cfddc3;
-  background: linear-gradient(120deg, #e5edda, #f0f5e8);
+.hero-headline .hero-introduction {
+  display: block;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d3e0c740;
 }
-.hero-contact-card .intro-label {
-  margin-bottom: 8px;
-  color: #52674a;
+.hero-headline .intro-label {
+  margin-bottom: 4px;
+  color: #d3e0c7;
   font-size: 0.62rem;
   letter-spacing: 0.12em;
 }
-.hero-contact-card .intro-name {
+.hero-headline .intro-name {
   display: block;
   padding: 0;
   margin: 0;
   border-radius: 0;
   background: transparent;
-  color: #23483e;
+  color: #fffdf4;
   font-family: var(--font-display);
   font-size: clamp(1.65rem, 2.2vw, 1.9rem);
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: -0.03em;
 }
-@media (max-width: 700px) {
-  .hero-contact-card .hero-introduction {
-    margin: -22px -18px 0;
-    padding: 22px 18px;
-    border-radius: 17px 17px 0 0;
-  }
-  .hero-contact-card .intro-name {
-    font-size: 1.65rem;
-  }
+.hero-message {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-inline-start: 16px;
+  border-inline-start: 2px solid #a18b5d;
+}
+.hero-message .hero-callout {
+  margin: 0;
+  color: #23483e;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+.hero-callout strong {
+  color: #795523;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.service-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.service-highlights li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid #ccd8c4;
+  border-radius: 14px;
+  background: #eef3e9;
+  color: #23483e;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.service-highlights li::before {
+  content: "";
+  flex: 0 0 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #9b7841;
+}
+.hero-invitation {
+  margin: 0;
+  color: #23483e;
+  font: 500 clamp(1.25rem, 2vw, 1.65rem) / 1.3 var(--font-display);
+  text-wrap: balance;
 }
 
-/* On phones the portrait and identity share the opening view. */
+/* On phones the portrait sits directly below the headline. */
 @media (max-width: 700px) {
   .hero-section > .hero {
     display: grid;
@@ -2814,15 +2809,16 @@ h4 {
     grid-column: 1 / -1;
     grid-row: 1;
     margin: 0;
-    padding: 16px;
+    padding: 20px;
   }
   .hero-section .portrait-wrap {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 2;
+    justify-self: center;
     align-self: end;
     position: relative;
     inset: auto;
-    width: 100%;
+    width: min(100%, 320px);
     height: clamp(260px, 72vw, 320px);
     min-width: 0;
     margin: 0 0 -14px;
@@ -2838,31 +2834,6 @@ h4 {
     object-fit: cover;
     object-position: center top;
   }
-  .hero-section .hero-introduction {
-    grid-column: 2;
-    grid-row: 2;
-    display: block;
-    align-self: end;
-    min-width: 0;
-    margin: 0;
-    padding: 18px 10px 20px;
-    border: 1px solid #416557;
-    border-radius: 3px 18px 3px 18px;
-    background: linear-gradient(145deg, #315747, #1c3d34);
-    box-shadow: 0 10px 24px rgba(24, 50, 41, 0.2);
-  }
-  .hero-section .intro-label {
-    color: #d3dfc7;
-    font-size: 0.57rem;
-    letter-spacing: 0.08em;
-    line-height: 1.6;
-    margin-bottom: 8px;
-  }
-  .hero-section .intro-name {
-    color: #fffdf4;
-    font-size: clamp(1rem, 5vw, 1.65rem);
-    line-height: 1.25;
-  }
   .hero-section .hero-contact-card .contact-links {
     grid-column: 1 / -1;
     grid-row: 3;
@@ -2875,17 +2846,15 @@ h4 {
     padding: 10px 6px;
     gap: 6px;
   }
-  .hero-section .hero-intro {
+  .hero-section .hero-message {
     grid-column: 1 / -1;
     grid-row: 4;
-    max-width: none;
     margin: 0;
     padding: 14px 16px;
     border: 1px solid #d2ddc8;
+    border-inline-start: 2px solid #a18b5d;
     border-radius: 14px;
     background: rgba(255, 254, 248, 0.93);
-    font-size: 0.86rem;
-    line-height: 1.65;
   }
   .hero-section .contact-email {
     grid-column: 1 / -1;
@@ -2913,4 +2882,79 @@ h4 {
 .hero-contact-card .messenger-links,
 .contact-panel .messenger-links {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 900px), (360px <= width <= 700px) {
+  .hero-contact-card .messenger-links {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 701px) and (max-height: 850px) {
+  .hero-section > .hero {
+    padding-block: 12px;
+  }
+  .hero-section .hero-copy {
+    padding-bottom: 0;
+  }
+  .hero-headline {
+    margin-bottom: 10px;
+  }
+  .hero-section .hero-headline,
+  .hero-section .hero-contact-card {
+    padding: 16px 20px;
+  }
+  .hero-headline .hero-introduction {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+  .hero-headline .hero-experience {
+    margin-top: 10px;
+  }
+  .hero-section .contact-email {
+    margin-top: 10px;
+  }
+  .hero-contact-card .hero-message {
+    margin-block: 0 12px;
+  }
+  .hero-contact-card .contact-links {
+    gap: 10px;
+  }
+  .hero-contact-card .button,
+  .hero-contact-card .messenger-link {
+    padding-block: 10px;
+  }
+}
+
+@media (max-width: 700px) and (max-height: 850px) {
+  .hero-section > .hero {
+    grid-template-rows: auto auto auto auto auto;
+    row-gap: 8px;
+    padding-block: 8px;
+  }
+  .hero-section .hero-headline {
+    padding: 12px 16px;
+  }
+  .hero-headline .hero-introduction {
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+  }
+  .hero-headline .hero-experience {
+    margin-top: 8px;
+  }
+  .hero-section .portrait-wrap {
+    height: clamp(120px, 23svh, 190px);
+    margin-bottom: -8px;
+  }
+  .hero-section .portrait {
+    object-fit: contain;
+  }
+  .hero-section .hero-contact-card .contact-links {
+    gap: 8px;
+  }
+  .hero-section .hero-contact-card .button,
+  .hero-section .hero-message,
+  .hero-section .contact-email {
+    padding-block: 8px;
+  }
 }

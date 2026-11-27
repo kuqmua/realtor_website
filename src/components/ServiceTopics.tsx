@@ -30,6 +30,7 @@ export function ServiceTopics({
         </ul>
       </div>
       <div className="topics-notes">
+        {id === "purchase" && <ServiceIcon name="chat" />}
         {notes.map((note, i) => (
           <p
             className={

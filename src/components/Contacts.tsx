@@ -39,13 +39,6 @@ export function Contacts() {
               согласовываются с вами индивидуально.
             </p>
           </div>
-          <div className="contact-geography">
-            <ServiceIcon name="globe" />
-            <div>
-              <h3>Рядом и на расстоянии</h3>
-              <p>{site.geography}</p>
-            </div>
-          </div>
         </div>
         <div className="contact-panel">
           <div className="contact-person">

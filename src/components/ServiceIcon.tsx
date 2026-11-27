@@ -1,4 +1,10 @@
 const paths = {
+  car: (
+    <path d="m5 10 2-5h10l2 5M5 18v2m14-2v2M5 10h14l2 3v5H3v-5Zm2 4h1m8 0h1" />
+  ),
+  heart: (
+    <path d="M12 20 4.5 12.5a4.5 4.5 0 0 1 6.4-6.4L12 7.2l1.1-1.1a4.5 4.5 0 0 1 6.4 6.4Z" />
+  ),
   apartment: (
     <>
       <path d="M4 21V4h16v17M2 21h20M8 21v-5h8v5M8 8h1m6 0h1M8 12h1m6 0h1" />

@@ -16,23 +16,28 @@ export function Hero() {
       <div className="hero container">
         <div className="hero-copy">
           <div className="hero-headline">
-            <p className="eyebrow">Недвижимость с личным участием</p>
+            <div className="hero-introduction">
+              <p className="intro-label">Ваш частный риелтор</p>
+              <p className="intro-name">{site.shortName}</p>
+            </div>
             <h1 id="hero-title">
               Помощь с покупкой
               <br />и продажей <em>недвижимости</em>
             </h1>
+            <p className="hero-experience">
+              Я эксперт по недвижимости и уже <strong>более 20 лет</strong>{" "}
+              специализируюсь на сделках с недвижимостью
+            </p>
           </div>
           <div className="hero-contact-card">
-            <div className="hero-introduction">
-              <div>
-                <p className="intro-label">Ваш частный риелтор</p>
-                <p className="intro-name">{site.shortName}</p>
-              </div>
+            <div className="hero-message">
+              <p className="hero-invitation">
+                Планируете продажу/покупку квартиры или загородной недвижимости?{" "}
+                <span className="hero-callout">
+                  Вы попали по адресу! <strong>Звоните!!!</strong>
+                </span>
+              </p>
             </div>
-            <p className="hero-intro">
-              Помогу разобраться в вашем вопросе и пройти путь к сделке
-              спокойно, с вниманием к деталям.
-            </p>
             <ContactLinks showPhone showMessengerLabel={false} />
             {site.email && (
               <a className="contact-email" href={`mailto:${site.email}`}>

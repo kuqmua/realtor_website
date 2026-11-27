@@ -58,17 +58,15 @@ test("content, anchors and contacts", async ({ page }) => {
   await expect(
     page.locator("#about, #services, #terms, #service-support"),
   ).toHaveCount(0);
-  await expect(page.locator("#insurance")).toContainText(
-    "Условия и оформление",
-  );
-  await expect(page.locator("#insurance")).toContainText("Вид страхования");
+  await expect(page.locator("#insurance h3")).toHaveText([
+    "Автострахование",
+    "Имущество",
+    "Путешествия",
+    "Жизнь и здоровье",
+  ]);
   await expect(page.locator("#clients")).toHaveCount(0);
   await expect(page.locator("body")).not.toContainText(
     /демонстрац|демо.?данн|тестов|здесь будет|ожидаем фотографию/i,
-  );
-  await expect(page.locator("#purchase")).toContainText("Более 20 лет");
-  await expect(page.locator("#purchase")).toContainText(
-    "Работаю самостоятельно",
   );
   await expect(page.locator(".service-overview h2")).toHaveText([
     "Покупка/Продажа недвижимости",
@@ -82,7 +80,7 @@ test("content, anchors and contacts", async ({ page }) => {
     "Окончательное решение об одобрении ипотеки принимает банк",
   );
   await expect(page.locator("#purchase")).toContainText(
-    "Дистанционные и электронные сделки",
+    "Можно обратиться за подбором, продажей или отдельным сопровождением сделки.",
   );
   await expect(page.locator("#contacts")).toContainText("частичная предоплата");
   await page
@@ -283,17 +281,18 @@ test("thematic images load with responsive sources and a decorative background",
   await expect(page.locator("#coverage")).toHaveCount(0);
 });
 
-test("purchase and sale services are visible together without numbering", async ({
+test("all five real estate services are visible without numbering", async ({
   page,
 }) => {
   await page.goto("/");
   const block = page.locator(".purchase-options");
-  await expect(
-    block.getByRole("heading", { name: "Покупателям", exact: true }),
-  ).toBeVisible();
-  await expect(
-    block.getByRole("heading", { name: "Продавцам", exact: true }),
-  ).toBeVisible();
+  await expect(block.getByRole("heading")).toHaveText([
+    "Подбор новостройки",
+    "Покупка недвижимости",
+    "Продажа недвижимости",
+    "Альтернативная сделка",
+    "Юридическое сопровождение",
+  ]);
   await expect(block.locator(".number")).toHaveCount(0);
 });
 
